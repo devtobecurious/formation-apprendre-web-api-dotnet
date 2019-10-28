@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "000-first-application", "000-first-application\000-first-application.csproj", "{628A6CA1-16C3-4CED-9F36-30C695C4FABD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "000", "000", "{9ABC5D6C-C5F0-45E6-9A94-6882EF61931E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "001", "001", "{0C666FDD-C196-4036-A8A3-BFAB6774E7CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "002", "002", "{BD2A8870-ED72-4AC0-91F6-844C9D1285BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "003", "003", "{1BD8E772-FD6F-4A50-B88A-6584A6481C0C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "004", "004", "{E26C6107-F113-4916-BEE1-6BEB7F09B80F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "005", "005", "{9191BABA-0BF9-4E75-B3EF-F9A51EAB0B87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "006", "006", "{63E8452C-7523-403E-96C7-D8046C43CE6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "007", "007", "{7FE39A5E-4922-4666-9352-77EB1661AD31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "008", "008", "{5C917393-99AE-4859-9805-CD149B587532}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "009", "009", "{B925EB8A-F52E-4D0C-85C0-D41C04BB903D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "010", "010", "{93B9E7CE-3201-4E1A-934A-C303E6AA0998}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "011", "011", "{30686962-E4C2-409C-9456-ACCD6EF03F3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{628A6CA1-16C3-4CED-9F36-30C695C4FABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{628A6CA1-16C3-4CED-9F36-30C695C4FABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{628A6CA1-16C3-4CED-9F36-30C695C4FABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{628A6CA1-16C3-4CED-9F36-30C695C4FABD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{628A6CA1-16C3-4CED-9F36-30C695C4FABD} = {E26C6107-F113-4916-BEE1-6BEB7F09B80F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {304306B2-C6CF-497E-906F-0B719D5890EF}
+	EndGlobalSection
+EndGlobal
