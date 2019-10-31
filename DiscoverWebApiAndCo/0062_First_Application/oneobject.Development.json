@@ -1,0 +1,8 @@
+{
+  "starwars": {
+    "nb": 80,
+    "begin": 1979,
+    "end": 2019
+  },
+  "otherconfig": "test"
+}
