@@ -29,10 +29,11 @@ namespace _0041_First_Application
         {
             services.AddDbContext<Models.Contexts.DefaultContext>((builder) =>
             {
-                builder.UseSqlServer(this.Configuration.GetConnectionString("DefaultContext"), (optionsAction) =>
-                {
-                    optionsAction.CommandTimeout(1000);
-                });
+                //builder.UseSqlServer(this.Configuration.GetConnectionString("DefaultContext"), (optionsAction) =>
+                //{
+                //    optionsAction.CommandTimeout(1000);
+                //});
+                builder.UseInMemoryDatabase("DefaultContext");
                 builder.EnableSensitiveDataLogging(true);
             });
 

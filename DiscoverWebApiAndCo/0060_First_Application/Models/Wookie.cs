@@ -12,18 +12,22 @@ namespace _0041_First_Application.Models
     {
         public static int ACCOUNT_ID = 0;
 
-        public Wookie(string name, WarriorType warriorType)
+        public Wookie()
         {
             this.Id = ++ ACCOUNT_ID;
-            this.Name = name;
             this.BirthDay = DateTime.Now;
+        }
+
+        public Wookie(string name, WarriorType warriorType) : this()
+        {
+            this.Name = name;
             this.WarriorType = warriorType;
         }
 
         [Key]
         public int Id { get; set; }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         public DateTime BirthDay { get; private set; }
 
