@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using _0041_First_Application.Models;
-using _0041_First_Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace _0041_First_Application.Controllers
 {
@@ -14,96 +12,35 @@ namespace _0041_First_Application.Controllers
     [Route("[controller]")]
     public class WookieController : ControllerBase
     {
-        #region 008 - Tests des réponses d'erreur
-        private WookieService _service = null;
-        private ILogger<WookieController> _logger;
-
-        public WookieController(WookieService service, ILogger<WookieController> logger)
-        {
-            this._service = service;
-            this._logger = logger;
-
-            this._logger.LogInformation("wookie controller constructor");
-        }
-
+        #region 006 - Tests avec FromQuery parametre
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] string filtre1)
         {
-            try
-            {
-                return this.Ok(this._service.GetAll());
-            }
-            catch (Exception ex)
-            {
-                this._logger.LogError(ex, ex.Message);
-                return this.Problem();
-            }
+            return this.Ok(new { success = filtre1 });
         }
-        #endregion
-
-        //#region 007 - Tests logging
-        //private WookieService _service = null;
-        //private ILogger<WookieController> _logger;
-
-        //public WookieController(WookieService service, ILogger<WookieController> logger)
-        //{
-        //    this._service = service;
-        //    this._logger = logger;
-
-        //    this._logger.LogInformation("wookie controller constructor");
-        //}
-
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    try
-        //    {
-        //        return this.Ok(this._service.GetAll());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this._logger.LogError(ex, ex.Message);
-        //        return this.Problem();
-        //    }
-        //}
-        //#endregion
-
-        #region 006 - Tests injections dépendances
-        //private WookieService _service = null;
-
-        //public WookieController(WookieService service)
-        //{
-        //    this._service = service;
-        //}
         #endregion
 
         #region 005 - Tests avec les contraints custom d'url
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    return this.Ok(this._service.GetAll());
-        //}
-
         //[HttpGet("{id:wexists}")]
         //public IActionResult Get(int id)
         //{
         //    return this.Ok(new Models.Wookie("essai", WarriorType.Chief));
         //}
 
-        //[HttpPost()]
-        //public IActionResult Post(Marator model) // Pas obligé la même classe, seules les noms des champs sont importants
-        //{
-        //    return this.Ok(model);
-        //}
+        [HttpPost()]
+        public IActionResult Post(Marator model) // Pas obligé la même classe, seules les noms des champs sont importants
+        {
+            return this.Ok(model);
+        }
         #endregion
 
         #region 003 - Tests sur la Configuration
-        //private IConfiguration _configuration;
+        private IConfiguration _configuration;
 
-        //public WookieController(IConfiguration configuration)
-        //{
-        //    this._configuration = configuration;
-        //}
+        public WookieController(IConfiguration configuration)
+        {
+            this._configuration = configuration;
+        }
 
         //[HttpGet()]
         //public IActionResult Get()
