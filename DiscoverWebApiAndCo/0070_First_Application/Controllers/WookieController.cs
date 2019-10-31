@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using _0041_First_Application.Models;
+using _0041_First_Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -12,56 +13,73 @@ namespace _0041_First_Application.Controllers
     [Route("[controller]")]
     public class WookieController : ControllerBase
     {
-        #region 005 - Tests avec les contraints custom d'url
-        [HttpGet("{id:wexists}")]
-        public IActionResult Get(int id)
-        {
-            return this.Ok(new Models.Wookie("essai", WarriorType.Chief));
-        }
+        #region 006 - Tests injections dépendances
+        private WookieService _service = null;
 
-        [HttpPost()]
-        public IActionResult Post(Marator model) // Pas obligé la même classe, seules les noms des champs sont importants
+        public WookieController(WookieService service)
         {
-            return this.Ok(model);
+            this._service = service;
         }
         #endregion
 
-        #region 003 - Tests sur la Configuration
-        private IConfiguration _configuration;
-
-        public WookieController(IConfiguration configuration)
-        {
-            this._configuration = configuration;
-        }
-
-        [HttpGet()]
+        #region 005 - Tests avec les contraints custom d'url
+        [HttpGet]
         public IActionResult Get()
         {
-            var starWarsSection = this._configuration.GetSection("starwars");
-            Film infosFilm = starWarsSection.Get<Models.Film>(options =>
-            {
-                options.BindNonPublicProperties = false;
-            });
-
-            starWarsSection.Bind(infosFilm, options =>
-            {
-                options.BindNonPublicProperties = false;
-            });
-
-            // https://docs.microsoft.com/fr-fr/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0#getsection-getchildren-and-exists
-            return this.Ok(new
-            {
-                test01 = this._configuration["test01"],
-                test02 = this._configuration["test02"], // ne ramène rien, car ici, nous avons un noeud enfant
-                test020 = this._configuration["test02:test020"],
-                test021 = this._configuration["test02:test021"],
-                test021a = this._configuration["test02:test021:a"],
-                test021b = this._configuration["test02:test021:b"],
-                infosFilm = infosFilm.Nb
-            });
 
 
+            return this.Ok(this._service.GetAll());
         }
+
+        //[HttpGet("{id:wexists}")]
+        //public IActionResult Get(int id)
+        //{
+        //    return this.Ok(new Models.Wookie("essai", WarriorType.Chief));
+        //}
+
+        //[HttpPost()]
+        //public IActionResult Post(Marator model) // Pas obligé la même classe, seules les noms des champs sont importants
+        //{
+        //    return this.Ok(model);
+        //}
+        #endregion
+
+        #region 003 - Tests sur la Configuration
+        //private IConfiguration _configuration;
+
+        //public WookieController(IConfiguration configuration)
+        //{
+        //    this._configuration = configuration;
+        //}
+
+        //[HttpGet()]
+        //public IActionResult Get()
+        //{
+        //    var starWarsSection = this._configuration.GetSection("starwars");
+        //    Film infosFilm = starWarsSection.Get<Models.Film>(options =>
+        //    {
+        //        options.BindNonPublicProperties = false;
+        //    });
+
+        //    starWarsSection.Bind(infosFilm, options =>
+        //    {
+        //        options.BindNonPublicProperties = false;
+        //    });
+
+        //    // https://docs.microsoft.com/fr-fr/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0#getsection-getchildren-and-exists
+        //    return this.Ok(new
+        //    {
+        //        test01 = this._configuration["test01"],
+        //        test02 = this._configuration["test02"], // ne ramène rien, car ici, nous avons un noeud enfant
+        //        test020 = this._configuration["test02:test020"],
+        //        test021 = this._configuration["test02:test021"],
+        //        test021a = this._configuration["test02:test021:a"],
+        //        test021b = this._configuration["test02:test021:b"],
+        //        infosFilm = infosFilm.Nb
+        //    });
+
+
+        //}
         #endregion
 
         #region 002 - Avec Entities
