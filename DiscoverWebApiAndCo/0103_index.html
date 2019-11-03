@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            console.log('coucou');
+
+            $.ajax({
+                url: 'http://localhost:58843/api/test',
+                success: function(data) {
+                    console.log('success');
+                },
+                error: function(resultat, status, error) {
+                    console.log('err', error);
+                }
+            })
+        })
+    </script>
+</body>
+</html>
