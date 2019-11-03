@@ -1,0 +1,111 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+using _0041_First_Application.Services;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+namespace _0041_First_Application
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddDbContext<Models.Contexts.DefaultContext>((builder) =>
+            {
+                builder.UseSqlServer(this.Configuration.GetConnectionString("DefaultContext"), (optionsAction) =>
+                {
+                    optionsAction.CommandTimeout(1000);
+                });
+                builder.EnableSensitiveDataLogging(true);
+            });
+
+            services.AddControllers();
+
+            services.AddIdentityCore<IdentityUser>(options =>
+            {
+                options.Password.RequireDigit = true;
+            }).AddEntityFrameworkStores<Models.Contexts.DefaultContext>();
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = this.Configuration["jwt:issuer"],
+                    ValidAudience = this.Configuration["jwt:audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(this.Configuration["jwt:key"]))
+                };
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(specificOrigin, builder =>
+                {
+                    builder.WithOrigins("http://127.0.0.1:5500").WithMethods("POST", "GET");
+                });
+
+            });
+
+            services.AddRouting(options =>
+            {
+                options.ConstraintMap.Add("wexists", typeof(Constraints.WookieExistRouteContraint));
+            });
+
+            services.AddTransient<WookieService>();
+        }
+
+        const string specificOrigin = "customOrigin";
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+
+            // !!! Entre Routing et Endpoints !!!
+            app.UseCors(specificOrigin);
+            // !!!!!
+
+            app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+    }
+}
