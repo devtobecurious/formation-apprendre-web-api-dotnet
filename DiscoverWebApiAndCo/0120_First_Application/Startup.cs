@@ -10,12 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using _0041_First_Application.Services;
 
-using log4net;
-
-namespace _0041_First_Application
+namespace _0111_First_Application
 {
     public class Startup
     {
@@ -29,28 +25,21 @@ namespace _0041_First_Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Models.Contexts.DefaultContext>((builder) =>
-            {
-                builder.UseSqlServer(this.Configuration.GetConnectionString("DefaultContext"), (optionsAction) =>
-                {
-                    optionsAction.CommandTimeout(1000);
-                });
-                builder.EnableSensitiveDataLogging(true);
-            });
-
             services.AddControllers();
 
-
-            services.AddRouting(options =>
+            services.AddSwaggerGen(options =>
             {
-                options.ConstraintMap.Add("wexists", typeof(Constraints.WookieExistRouteContraint));
-            });
+                options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Description = "test descr",
+                    Title = "test title"
 
-            services.AddTransient<WookieService>();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -63,8 +52,15 @@ namespace _0041_First_Application
 
             app.UseAuthorization();
 
-            
-            
+            app.UseSwagger(options =>
+            {
+                
+            });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "description");
+            });
 
             app.UseEndpoints(endpoints =>
             {
