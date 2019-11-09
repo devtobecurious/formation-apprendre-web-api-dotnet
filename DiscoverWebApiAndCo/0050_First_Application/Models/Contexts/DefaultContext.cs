@@ -8,6 +8,8 @@ namespace _0041_First_Application.Models.Contexts
     using System.Threading.Tasks;
     using System.Transactions;
 
+    // https://stackoverflow.com/questions/54252352/create-ef-core-context-once-per-request-in-asp-net-core
+    // > creating db context each time per request
     public class DefaultContext : DbContext
     {
         public DefaultContext() { }

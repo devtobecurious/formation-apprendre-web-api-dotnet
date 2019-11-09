@@ -22,7 +22,9 @@ namespace _0041_First_Application.Models.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Wookie>().HasOne(item => item.Famille).WithMany(item => item.Wookies).HasForeignKey(item => item.FamilyId);
+            modelBuilder.Entity<Wookie>().HasOne(item => item.Famille)
+                .WithMany(item => item.Wookies)
+                .HasForeignKey(item => item.FamilyId);
         }
 
         public DbSet<Wookie> Wookies { get; set; }
